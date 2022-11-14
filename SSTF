@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+  // vector<int>:: iterator it;
+
+int minDiff(int *req,int pos,int n)
+{
+    int newpos;
+    int mini=INT_MAX;
+    int diff;
+    for(int i=0;i<n;i++)
+    {
+        if(req[i]!=-1)
+        {
+         diff=abs(pos-req[i]);
+         if(mini>diff)
+         {
+             mini=diff;
+             newpos=i;
+         }
+        }
+    }
+  //  cout<<"request choosen :"<<req[newpos];
+    return newpos;
+}
+
+   
+float SSTF(int *req,int pos,int n)
+{
+    
+   // sort(req.begin(),req.end());
+   /* vector<int> :: iterator it;
+   while(!req.empty())
+   {
+         it=req.find(req.begin(),req.end());
+         int temp=req[it];
+         
+         if(abs(req[it]-req[it-1])<(req[it+1]-req[it]))
+         {
+             
+             total+=abs(req[it]-req[it-1]);
+             req.erase(req.begin()+it);
+             
+         }
+         else
+         {
+              total+=abs(req[it+1]-req[it]);
+             req.erase(req.begin()+it);
+         }
+   }*/
+   int posi=pos;
+  float total=0;
+   
+   for(int i=0;i<n;i++)
+   {
+       int index=minDiff(req,posi,n);
+      // cout<<"diff: "<<abs(pos-req[index]);
+       total+=abs(posi-req[index]);
+       posi=req[index];
+       req[index]=-1;
+       
+   }
+   
+   float avg=total/n;
+   return avg;
+   
+   
+   
+   
+  
+}
+
+int main()
+{
+    int n,positom;
+   cout<<"Enter the number of requests:";
+   cin>>n;
+ 
+int req[n];
+  cout<<"Enter the requests:";
+  for(int i=0;i<n;i++)
+  {
+     // int r;
+      cin>>req[i];
+    //  req.push_back(r);
+  }
+  cout<<"Enter the positon where initially circular arm is present:";
+  cin>>positom;
+  cout<<SSTF(req,positom,n);
+    return 0;
+}
